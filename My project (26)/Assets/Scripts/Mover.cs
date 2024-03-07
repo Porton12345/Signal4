@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;     
+    [SerializeField] private float _moveSpeed;
+
+    private const string Horizontal = nameof(Horizontal);
+    private const string Vertical = nameof(Vertical);
+
+    Vector3 distance = Vector3.zero;
 
     private void Update()
     {
@@ -14,24 +16,13 @@ public class Mover : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
-        }
+        float verticalDirection = Input.GetAxisRaw("Vertical");
+        Vector3 verticalDistance = verticalDirection * _moveSpeed * Time.deltaTime * Vector3.up;
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(_moveSpeed * Time.deltaTime * -1, 0, 0);
-        }
+        float horizontalDirection = Input.GetAxisRaw("Horizontal");
+        Vector3 horizontalDistance = horizontalDirection * _moveSpeed * Time.deltaTime * Vector3.right;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(0, _moveSpeed * Time.deltaTime, 0);
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(0, _moveSpeed * Time.deltaTime * -1, 0);
-        }
+        Vector3 distance = verticalDistance + horizontalDistance;
+        transform.Translate(distance);        
     }
 }
