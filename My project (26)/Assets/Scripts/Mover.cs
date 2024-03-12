@@ -7,7 +7,7 @@ public class Mover : MonoBehaviour
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
 
-    Vector3 distance = Vector3.zero;
+    private Vector3 _distance = Vector3.zero;
 
     private void Update()
     {
@@ -22,7 +22,7 @@ public class Mover : MonoBehaviour
         float horizontalDirection = Input.GetAxisRaw("Horizontal");
         Vector3 horizontalDistance = horizontalDirection * _moveSpeed * Time.deltaTime * Vector3.right;
 
-        Vector3 distance = verticalDistance + horizontalDistance;
-        transform.Translate(distance);        
+        _distance = verticalDistance + horizontalDistance;
+        transform.Translate(_distance);        
     }
 }
